@@ -31,7 +31,7 @@ jobs:
       - name: Checkout upstream repo
         uses: actions/checkout@v4
         with:
-          repository: tdlib/telegram-bot-api
+          repository: ibrohimislam/telegram-bot-api
           path: telegram-bot-api
           submodules: recursive
 
