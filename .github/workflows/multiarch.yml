@@ -18,7 +18,6 @@ jobs:
       matrix:
         arch:
           - linux/amd64
-          - linux/arm64
 
     steps:
       - name: Checkout current repo
@@ -131,7 +130,6 @@ jobs:
         run: |
           cat github_env/github.env > $GITHUB_ENV
           docker load --input image_linuxamd64/linuxamd64.tar
-          docker load --input image_linuxarm64/linuxarm64.tar
 
       - name: Login to ghcr registry
         uses: docker/login-action@v2
@@ -150,10 +148,8 @@ jobs:
         run: |
           docker manifest create ${{ env.IMAGE_TAG }}:${{ env.VERSION }} \
             --amend ${{ env.IMAGE_TAG }}:${{ env.VERSION }}-linuxamd64 \
-            --amend ${{ env.IMAGE_TAG }}:${{ env.VERSION }}-linuxarm64 \
           docker manifest push ${{ env.IMAGE_TAG }}:${{ env.VERSION }}
 
           docker manifest create ${{ env.IMAGE_TAG }}:latest \
             --amend ${{ env.IMAGE_TAG }}:${{ env.VERSION }}-linuxamd64 \
-            --amend ${{ env.IMAGE_TAG }}:${{ env.VERSION }}-linuxarm64 \
           docker manifest push ${{ env.IMAGE_TAG }}:latest
