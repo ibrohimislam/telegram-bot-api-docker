@@ -5,12 +5,13 @@ USERNAME=telegram-bot-api
 GROUPNAME=telegram-bot-api
 
 chown ${USERNAME}:${GROUPNAME} "${TELEGRAM_WORK_DIR}"
+chown ${USERNAME}:${GROUPNAME} $(dirname "${TELEGRAM_UNIX_SOCKET}")
 
 if [ -n "${1}" ]; then
   exec "${*}"
 fi
 
-DEFAULT_ARGS="--http-port 8081 --dir=${TELEGRAM_WORK_DIR} --temp-dir=${TELEGRAM_TEMP_DIR} --username=${USERNAME} --groupname=${GROUPNAME}"
+DEFAULT_ARGS="--unix-socket ${TELEGRAM_UNIX_SOCKET} --dir=${TELEGRAM_WORK_DIR} --temp-dir=${TELEGRAM_TEMP_DIR} --username=${USERNAME} --groupname=${GROUPNAME}"
 CUSTOM_ARGS=""
 
 if [ -n "$TELEGRAM_LOG_FILE" ]; then
@@ -36,9 +37,6 @@ if [ -n "$TELEGRAM_PROXY" ]; then
 fi
 if [ -n "$TELEGRAM_LOCAL" ]; then
   CUSTOM_ARGS="${CUSTOM_ARGS} --local"
-fi
-if [ -n "$TELEGRAM_HTTP_IP_ADDRESS" ]; then
-  CUSTOM_ARGS="${CUSTOM_ARGS} --http-ip-address=$TELEGRAM_HTTP_IP_ADDRESS"
 fi
 
 COMMAND="telegram-bot-api ${DEFAULT_ARGS}${CUSTOM_ARGS}"
