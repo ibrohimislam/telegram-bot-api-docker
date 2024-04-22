@@ -147,9 +147,9 @@ jobs:
       - name: Create and push manifest
         run: |
           docker manifest create ${{ env.IMAGE_TAG }}:${{ env.VERSION }} \
-            --amend ${{ env.IMAGE_TAG }}:${{ env.VERSION }}-linuxamd64 \
+            --amend ${{ env.IMAGE_TAG }}:${{ env.VERSION }}-linuxamd64
           docker manifest push ${{ env.IMAGE_TAG }}:${{ env.VERSION }}
 
           docker manifest create ${{ env.IMAGE_TAG }}:latest \
-            --amend ${{ env.IMAGE_TAG }}:${{ env.VERSION }}-linuxamd64 \
+            --amend ${{ env.IMAGE_TAG }}:${{ env.VERSION }}-linuxamd64
           docker manifest push ${{ env.IMAGE_TAG }}:latest
